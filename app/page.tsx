@@ -1,8 +1,10 @@
 'use client';
 
+import { MetaMaskInpageProvider } from "@metamask/providers";
+
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum?: MetaMaskInpageProvider;
   }
 }
 
@@ -21,8 +23,8 @@ export default function Home() {
     console.log("Connect Wallet");
     if (window.ethereum) {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        console.log("Connected account:", accounts[0]);
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }) as string[];
+        console.log("Connected account:", accounts?.[0]);
       } catch (error) {
         console.error("User denied account access", error);
       }
@@ -65,16 +67,17 @@ export default function Home() {
 
   const connectWallet4 = async () => {
     console.log("Connect Wallet 4");
-    const ethereum = await detectEthereumProvider()
-    if (ethereum) {
-        try {
-            await ethereum.request({ method: 'eth_requestAccounts' });
-            console.log("Connected account:", await ethereum.getAccounts());
-        } catch (error) {
-            console.error("User denied account access", error);
-        }
+    const provider = await detectEthereumProvider() as MetaMaskInpageProvider;
+    if (provider) {
+      try {
+        await provider.request({ method: 'eth_requestAccounts' });
+        const accounts = await provider.request({ method: 'eth_accounts' });
+        console.log("Connected account:", accounts);
+      } catch (error) {
+        console.error("User denied account access", error);
+      }
     } else {
-        alert("MetaMask not detected.");
+      alert("MetaMask not detected.");
     }
   }
 
