@@ -39,8 +39,8 @@ export default function Home() {
         const web3 = new Web3(window.ethereum);
         try {
             await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const accounts = await web3.eth.getAccounts();
-            console.log("Connected account:", accounts[0]);
+            // const accounts = await web3.eth.getAccounts();
+            // console.log("Connected account:", accounts[0]);
         } catch (error) {
             console.error("User denied account access", error);
         }
@@ -54,9 +54,9 @@ export default function Home() {
     if (window.ethereum) {
         try {
             await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const provider = new ethers.BrowserProvider(window.ethereum);
-            const signer = await provider.getSigner();
-            console.log("Connected account:", await signer.getAddress());
+            // const provider = new ethers.BrowserProvider(window.ethereum);
+            // const signer = await provider.getSigner();
+            // console.log("Connected account:", await signer.getAddress());
         } catch (error) {
             console.error("User denied account access", error);
         }
@@ -71,8 +71,8 @@ export default function Home() {
     if (provider) {
       try {
         await provider.request({ method: 'eth_requestAccounts' });
-        const accounts = await provider.request({ method: 'eth_accounts' });
-        console.log("Connected account:", accounts);
+        // const accounts = await provider.request({ method: 'eth_accounts' });
+        // console.log("Connected account:", accounts);
       } catch (error) {
         console.error("User denied account access", error);
       }
